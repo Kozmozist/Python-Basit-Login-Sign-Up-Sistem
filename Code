@@ -1,0 +1,91 @@
+import random
+
+kullanicilar = {}
+islem = ""
+
+print('*************************')
+print('#    Hoşgeldiniz     #')
+print('*************************')
+
+def baslangıc_ekranı():
+    islem = input('İşlem seçenekleri,\n"1" => Giriş\n"2" => Kayıt\n"3" => Çıkış > ')
+    
+    if islem == '1':
+        giris()
+    
+    elif islem == '2':
+        kayıt()
+
+    elif islem == '3' or 'q' or 'Q':
+        exit()
+
+
+def kayıt():
+    yeni_kullanıcı_adı = input('Kullanıcı adını giriniz: ')
+
+    if yeni_kullanıcı_adı in kullanicilar:
+        print('Bu kullanıcı zaten kayıtlı!')
+
+
+    else:
+        print('Lütfen bize robot olmadığınız kanıtlayın!')
+
+        cap = dogrulama()
+
+        if cap is True:
+
+            onaylı_yeni_kullanıcı_adı = input('Kullanıcı adını doğrulayın: ')
+
+            if onaylı_yeni_kullanıcı_adı == yeni_kullanıcı_adı:
+                yeni_parola = input('Lütfen parolanızı oluşturunuz: ')
+                onaylı_yeni_parola = input('Lütfen parolanızı doğrulayınız: ')
+
+                if yeni_parola == yeni_kullanıcı_adı:
+                    print('Parola ile kullanıcı adı aynı, lütfen değiştirin.')
+                
+                else:
+                    if yeni_parola == onaylı_yeni_parola:
+                        kullanicilar[yeni_kullanıcı_adı] = yeni_parola
+                        print('Kullanıcı başarıyla oluşturuldu. Lütfen giriş ekranına dönüp, giriş yapınız')
+                    else:
+                        print('Parolalar uyuşmuyor')
+
+            else:
+                print('Kullanıcı adları uyuşmuyor!')
+        
+        else:
+            print('Doğrulama başarısız ❌')
+
+
+def dogrulama():
+    sayi1 = random.randint(1,200)
+    sayi2 = random.randint(1,100)
+
+    kullanıcı_cevabı = int(input(f'{sayi1} + {sayi2} = '))
+    cevap = sayi1 + sayi2
+
+    if kullanıcı_cevabı == cevap:
+        print('Doğrulama başarılı ✔')
+        return True
+
+def giris():
+    giris = input('Kullanıcı adınızı giriniz: ')
+    parola = input('Parolanızı giriniz: ')
+
+    print('Lütfen robot olmadığınızı kanıtlayın 🤖')
+
+    cap = dogrulama()
+
+    if cap is True:
+        
+        if giris in kullanicilar and kullanicilar[giris] == parola:
+            print(f'{giris} adıyla giriş yaptı')
+
+        else:
+            print('Kullanıcı mevcut değil ya da kullanıcı adı/parola yanlış ✖')
+
+    else:
+        print('Doğrulama başarısız!')
+
+while islem != '3':
+    baslangıc_ekranı()
